@@ -38,4 +38,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
+
+    implementation(libs.ktor.core)
+    implementation(libs.ktor.android)
 }
