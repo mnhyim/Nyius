@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Nyius"
 include(":app")
+include(":domain")
