@@ -7,12 +7,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.key.Key.Companion.Home
-import androidx.compose.ui.tooling.preview.Preview
-import com.mnhyim.nyius.ui.home.Home
+import androidx.navigation.compose.rememberNavController
+import com.mnhyim.nyius.ui.feature.home.HomeScreen
+import com.mnhyim.nyius.ui.navigation.MainNavHost
 import com.mnhyim.nyius.ui.theme.NyiusTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,12 +18,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val navController = rememberNavController()
             NyiusTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Home(
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                MainNavHost(navController)
             }
         }
     }
