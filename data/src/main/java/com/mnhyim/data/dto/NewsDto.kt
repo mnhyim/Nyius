@@ -1,5 +1,8 @@
 package com.mnhyim.data.dto
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class NewsDto(
     val source: SourceDto,
     val author: String,

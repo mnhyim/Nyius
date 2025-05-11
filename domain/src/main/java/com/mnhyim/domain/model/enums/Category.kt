@@ -1,4 +1,4 @@
-package com.mnhyim.domain.enum
+package com.mnhyim.domain.model.enums
 
 enum class Category(val title: String) {
     BUSINESS("Business"),

@@ -1,4 +1,4 @@
-package com.mnhyim.domain.enum
+package com.mnhyim.domain.model.enums
 
 enum class Country(val title: String) {
     AE("United Arab Emirates"),
