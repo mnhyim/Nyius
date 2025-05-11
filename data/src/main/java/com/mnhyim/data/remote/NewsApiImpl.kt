@@ -1,5 +1,6 @@
 package com.mnhyim.data.remote
 
+import com.mnhyim.data.dto.responses.NewsApiResponse
 import com.mnhyim.data.dto.responses.SourcesApiResponse
 import com.mnhyim.domain.model.enums.Category
 import com.mnhyim.domain.model.enums.Country
@@ -22,5 +23,10 @@ class NewsApiImpl(
     ): SourcesApiResponse {
         val sources: SourcesApiResponse = httpClient.get(BASE_URL + "top-headlines/sources?category=${category?.title}&apiKey=${DUMMY_API_KEY}").body()
         return sources
+    }
+
+    override suspend fun getTopHeadlinesBySources(sources: String): NewsApiResponse {
+        val news: NewsApiResponse = httpClient.get(BASE_URL + "top-headlines?sources=${sources}&apiKey=${DUMMY_API_KEY}").body()
+        return news
     }
 }

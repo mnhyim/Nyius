@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.mnhyim.nyius.ui.feature.home.HomeScreen
+import com.mnhyim.nyius.ui.feature.news.NewsScreen
 import com.mnhyim.nyius.ui.feature.sources.SourcesScreen
 
 @Composable
@@ -25,6 +26,12 @@ fun MainNavHost(
         }
         composable<Routes.Sources> {
             SourcesScreen(
+                onNavigate = navController::navigate,
+                modifier = modifier
+            )
+        }
+        composable<Routes.News> {
+            NewsScreen(
                 onNavigate = navController::navigate,
                 modifier = modifier
             )

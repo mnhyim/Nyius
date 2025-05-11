@@ -7,9 +7,12 @@ import com.mnhyim.domain.model.enums.Category
 import com.mnhyim.domain.model.enums.Country
 import com.mnhyim.domain.model.enums.Language
 import com.mnhyim.data.remote.NewsApi
+import com.mnhyim.domain.model.News
+import com.mnhyim.domain.model.Source
 import com.mnhyim.domain.network.NewsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import java.time.LocalDate
 
 class NewsRepositoryImpl(
     private val api: NewsApi
@@ -36,6 +39,28 @@ class NewsRepositoryImpl(
                     category = Category.ENTERTAINMENT,
                     language = Language.EN,
                     country = Country.US
+                )
+            }
+            emit(Resource.Success(mappedResponse))
+        } catch (e: Exception) {
+            emit(Resource.Error(e))
+        }
+    }
+
+    override fun getTopHeadlinesBySources(sources: String): Flow<Resource<List<News>>> = flow {
+        emit(Resource.Loading)
+        try {
+            val response = api.getTopHeadlinesBySources(sources = sources)
+            val mappedResponse = response.articles.map {
+                News(
+                    source = Source(it.source.id, it.source.name),
+                    author = it.author ?: "",
+                    title = it.title ?: "",
+                    description = it.description ?: "",
+                    url = it.url ?: "",
+                    urlToImage = it.urlToImage ?: "",
+                    timestamp = LocalDate.now(),
+                    content = it.content ?: ""
                 )
             }
             emit(Resource.Success(mappedResponse))

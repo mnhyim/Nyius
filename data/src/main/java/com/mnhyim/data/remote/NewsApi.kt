@@ -1,5 +1,6 @@
 package com.mnhyim.data.remote
 
+import com.mnhyim.data.dto.responses.NewsApiResponse
 import com.mnhyim.data.dto.responses.SourcesApiResponse
 import com.mnhyim.domain.model.enums.Category
 import com.mnhyim.domain.model.enums.Country
@@ -14,5 +15,5 @@ interface NewsApi {
     ): SourcesApiResponse
 //    suspend fun getTopHeadlinesByCountry(country: Country)
 //    suspend fun getTopHeadlinesByCategory(category: Category)
-//    suspend fun getTopHeadlinesBySources(sources: String)
+    suspend fun getTopHeadlinesBySources(sources: String): NewsApiResponse
 }

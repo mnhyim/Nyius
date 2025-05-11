@@ -1,5 +1,6 @@
 package com.mnhyim.domain.network
 
+import com.mnhyim.domain.model.News
 import com.mnhyim.domain.model.Resource
 import com.mnhyim.domain.model.SourceDetail
 import com.mnhyim.domain.model.enums.Category
@@ -16,5 +17,5 @@ interface NewsRepository {
     ): Flow<Resource<List<SourceDetail>>>
 //    suspend fun getTopHeadlinesByCountry(country: Country)
 //    suspend fun getTopHeadlinesByCategory(category: Category)
-//    suspend fun getTopHeadlinesBySources(sources: String)
+    fun getTopHeadlinesBySources(sources: String): Flow<Resource<List<News>>>
 }

@@ -11,4 +11,7 @@ sealed class Routes {
 
     @Serializable
     data class Sources(val category: String): Routes()
+
+    @Serializable
+    data class News(val sources: String): Routes()
 }
