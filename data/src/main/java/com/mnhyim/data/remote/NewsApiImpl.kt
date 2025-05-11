@@ -13,13 +13,14 @@ class NewsApiImpl(
 ): NewsApi {
 
     private val BASE_URL = "https://newsapi.org/v2/"
+    private val DUMMY_API_KEY = "a8ddfed7b99c4f2483649d694b79b0fb"
 
     override suspend fun getNewsSources(
-        category: Category,
-        lang: Language,
-        country: Country
+        category: Category?,
+        lang: Language?,
+        country: Country?
     ): SourcesApiResponse {
-        val sources: SourcesApiResponse = httpClient.get(BASE_URL + "top-headlines/sources?apiKey=a8ddfed7b99c4f2483649d694b79b0fb").body()
+        val sources: SourcesApiResponse = httpClient.get(BASE_URL + "top-headlines/sources?category=${category?.title}&apiKey=${DUMMY_API_KEY}").body()
         return sources
     }
 }

@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class SourceDetailDto(
     val id: String = "",
     val name: String = "",
-    val desc: String = "",
+    val description: String = "",
     val url: String = "",
     val category: String = "",
     val language: String = "",

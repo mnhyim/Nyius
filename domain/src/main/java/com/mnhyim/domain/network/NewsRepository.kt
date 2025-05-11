@@ -8,8 +8,12 @@ import com.mnhyim.domain.model.enums.Language
 import kotlinx.coroutines.flow.Flow
 
 interface NewsRepository {
-//    suspend fun searchNews(query: String, lang: Language): Flow<Resource<List<News>>>
-    suspend fun getNewsSources(category: Category, lang: Language, country: Country): Flow<Resource<List<SourceDetail>>>
+    //    suspend fun searchNews(query: String, lang: Language): Flow<Resource<List<News>>>
+    fun getNewsSources(
+        category: Category? = null,
+        lang: Language? = null,
+        country: Country? = null
+    ): Flow<Resource<List<SourceDetail>>>
 //    suspend fun getTopHeadlinesByCountry(country: Country)
 //    suspend fun getTopHeadlinesByCategory(category: Category)
 //    suspend fun getTopHeadlinesBySources(sources: String)

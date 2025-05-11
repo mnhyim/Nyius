@@ -55,7 +55,7 @@ private fun Home(
         ) {
             items(items = Category.entries.toTypedArray()) {
                 OutlinedCard(
-                    onClick = { onNavigate(Routes.Home) }
+                    onClick = { onNavigate(Routes.Sources(it.name)) }
                 ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,

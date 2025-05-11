@@ -15,12 +15,11 @@ class NewsRepositoryImpl(
     private val api: NewsApi
 ) : NewsRepository {
 
-    override suspend fun getNewsSources(
-        category: Category,
-        lang: Language,
-        country: Country
+    override fun getNewsSources(
+        category: Category?,
+        lang: Language?,
+        country: Country?
     ): Flow<Resource<List<SourceDetail>>> = flow {
-        Log.d("A", "LoadinASDADg")
         emit(Resource.Loading)
         try {
             val response = api.getNewsSources(
@@ -32,7 +31,7 @@ class NewsRepositoryImpl(
                 SourceDetail(
                     id = it.id,
                     name = it.name,
-                    desc = it.desc,
+                    desc = it.description,
                     url = it.url,
                     category = Category.ENTERTAINMENT,
                     language = Language.EN,
