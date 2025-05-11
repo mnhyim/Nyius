@@ -17,7 +17,10 @@ fun MainNavHost(
         startDestination = Routes.Home,
     ) {
         composable<Routes.Home> {
-            HomeScreen(modifier = modifier)
+            HomeScreen(
+                onNavigate = navController::navigate,
+                modifier = modifier
+            )
         }
     }
 }
