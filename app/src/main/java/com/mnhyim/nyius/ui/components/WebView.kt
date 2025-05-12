@@ -10,7 +10,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 fun WebView(
     url: String,
     modifier: Modifier = Modifier
-){
+) {
     AndroidView(
         factory = {
             WebView(it).apply {

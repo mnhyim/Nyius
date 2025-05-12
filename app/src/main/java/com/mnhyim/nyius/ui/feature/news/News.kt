@@ -89,6 +89,7 @@ private fun News(
                     )
                 }
             }
+
             UiStatus.SUCCESS -> {
                 LazyColumn(
                     verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -96,7 +97,12 @@ private fun News(
                 ) {
                     items(items = newsList) { news ->
                         Card(
-                            onClick = { context.launchCustomTabs(url = news.url, useIncognito = false) }
+                            onClick = {
+                                context.launchCustomTabs(
+                                    url = news.url,
+                                    useIncognito = false
+                                )
+                            }
                         ) {
                             Row(
                                 modifier = Modifier.height(IntrinsicSize.Min)
@@ -139,11 +145,11 @@ private fun News(
                     }
                 }
             }
+
             UiStatus.ERROR -> {
                 Text("Error")
             }
         }
-
     }
 }
 

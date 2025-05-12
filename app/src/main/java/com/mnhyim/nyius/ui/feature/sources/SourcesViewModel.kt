@@ -39,9 +39,11 @@ class SourcesViewModel(
                     _uiState.value = UiStatus.SUCCESS
                     _sources.value = response.data
                 }
+
                 is Resource.Error -> {
                     _uiState.value = UiStatus.ERROR
                 }
+
                 is Resource.Loading -> {
                     _uiState.value = UiStatus.LOADING
                 }

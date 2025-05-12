@@ -67,5 +67,7 @@ dependencies {
     implementation(libs.compose.navigation)
 
     implementation(libs.kotlinx.serialization.json)
-    implementation("androidx.browser:browser:1.8.0")
+    implementation(libs.androidx.browser)
+    implementation(libs.google.fonts)
+    implementation(libs.material.icons.extended)
 }
