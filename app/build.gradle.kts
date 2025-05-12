@@ -70,4 +70,6 @@ dependencies {
     implementation(libs.androidx.browser)
     implementation(libs.google.fonts)
     implementation(libs.material.icons.extended)
+    implementation(libs.coil3.compose)
+    implementation(libs.coil3.network)
 }

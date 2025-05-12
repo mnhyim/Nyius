@@ -14,7 +14,7 @@ class NewsApiImpl(
 ): NewsApi {
 
     private val BASE_URL = "https://newsapi.org/v2/"
-    private val DUMMY_API_KEY = "a8ddfed7b99c4f2483649d694b79b0fb"
+    private val DUMMY_API_KEY = ""
 
     override suspend fun getNewsSources(
         category: Category?,
