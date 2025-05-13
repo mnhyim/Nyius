@@ -27,9 +27,9 @@ class NewsApiImpl(
         return sources
     }
 
-    override suspend fun getTopHeadlinesBySources(sources: String): NewsApiResponse {
+    override suspend fun getTopHeadlinesBySources(sources: String, page: Int): NewsApiResponse {
         val news: NewsApiResponse =
-            httpClient.get(BASE_URL + "top-headlines?sources=${sources}&apiKey=${DUMMY_API_KEY}")
+            httpClient.get(BASE_URL + "everything?sources=${sources}&page=$page&pageSize=5&apiKey=${DUMMY_API_KEY}")
                 .body()
         return news
     }

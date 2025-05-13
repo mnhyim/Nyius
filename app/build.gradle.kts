@@ -72,4 +72,6 @@ dependencies {
     implementation(libs.material.icons.extended)
     implementation(libs.coil3.compose)
     implementation(libs.coil3.network)
+    implementation(libs.paging)
+    implementation(libs.paging.compose)
 }

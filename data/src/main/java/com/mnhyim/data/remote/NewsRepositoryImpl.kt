@@ -1,25 +1,27 @@
 package com.mnhyim.data.remote
 
-import android.util.Log
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.map
+import com.mnhyim.data.remote.paging.NewsPagingSource
+import com.mnhyim.data.remote.paging.PagedNewsRepository
+import com.mnhyim.domain.model.News
 import com.mnhyim.domain.model.Resource
+import com.mnhyim.domain.model.Source
 import com.mnhyim.domain.model.SourceDetail
 import com.mnhyim.domain.model.enums.Category
 import com.mnhyim.domain.model.enums.Country
 import com.mnhyim.domain.model.enums.Language
-import com.mnhyim.data.remote.NewsApi
-import com.mnhyim.domain.model.News
-import com.mnhyim.domain.model.Source
 import com.mnhyim.domain.network.NewsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import java.time.Instant
-import java.time.LocalDate
-import java.time.ZoneId
+import kotlinx.coroutines.flow.map
 import java.time.ZonedDateTime
 
 class NewsRepositoryImpl(
     private val api: NewsApi
-) : NewsRepository {
+) : NewsRepository, PagedNewsRepository {
 
     override fun getNewsSources(
         category: Category,
@@ -69,6 +71,26 @@ class NewsRepositoryImpl(
             emit(Resource.Success(mappedResponse))
         } catch (e: Exception) {
             emit(Resource.Error(e))
+        }
+    }
+
+    override fun getPagedNews(source: String): Flow<PagingData<News>> {
+        return Pager(
+            config = PagingConfig(pageSize = 5, initialLoadSize = 10),
+            pagingSourceFactory = { NewsPagingSource(api, source) }
+        ).flow.map { pagingData ->
+            pagingData.map {
+                News(
+                    source = Source(it.source.id, it.source.name),
+                    author = it.author ?: "",
+                    title = it.title ?: "",
+                    description = it.description ?: "",
+                    url = it.url ?: "",
+                    urlToImage = it.urlToImage ?: "",
+                    timestamp = ZonedDateTime.parse(it.publishedAt).toLocalDate(),
+                    content = it.content ?: ""
+                )
+            }
         }
     }
 }

@@ -2,32 +2,30 @@ package com.mnhyim.nyius.ui.feature.news
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Newspaper
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemKey
+import com.mnhyim.domain.model.News
 import com.mnhyim.nyius.ui.components.ErrorMessage
 import com.mnhyim.nyius.ui.components.NewsCard2
 import com.mnhyim.nyius.ui.components.TitledTopAppBar
 import com.mnhyim.nyius.ui.navigation.Routes
-import com.mnhyim.nyius.ui.util.UiStatus
 import com.mnhyim.nyius.ui.util.launchCustomTabs
 import org.koin.androidx.compose.koinViewModel
-
 
 @Composable
 fun NewsScreen(
@@ -36,6 +34,7 @@ fun NewsScreen(
     viewModel: NewsViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val news = viewModel.getPagedNews(viewModel.source).collectAsLazyPagingItems()
 
     Scaffold(
         topBar = {
@@ -47,8 +46,7 @@ fun NewsScreen(
         }
     ) { innerPadding ->
         News(
-            uiState = uiState,
-            onNavigate = onNavigate,
+            items = news,
             modifier = modifier
                 .padding(innerPadding)
                 .padding(horizontal = 16.dp)
@@ -58,8 +56,7 @@ fun NewsScreen(
 
 @Composable
 private fun News(
-    uiState: NewsUiState,
-    onNavigate: (Routes) -> Unit,
+    items: LazyPagingItems<News>,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -67,47 +64,60 @@ private fun News(
     Column(
         modifier = modifier
     ) {
-        when (uiState.status) {
-            UiStatus.LOADING -> {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    CircularProgressIndicator()
-                    Text(
-                        text = "Loading",
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(top = 8.dp)
+        LazyVerticalStaggeredGrid(
+            columns = StaggeredGridCells.Fixed(2),
+            verticalItemSpacing = 8.dp,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            items(
+                count = items.itemCount,
+                key = items.itemKey { it.url }
+            ) { id ->
+                items[id]?.let { news ->
+                    NewsCard2(
+                        news = news,
+                        onClick = {
+                            context.launchCustomTabs(
+                                url = news.url,
+                                useIncognito = false
+                            )
+                        }
                     )
                 }
             }
+            items.apply {
+                when {
+                    loadState.refresh is LoadState.Loading -> {
+                        item { CircularProgressIndicator() }
+                    }
 
-            UiStatus.SUCCESS -> {
-                LazyVerticalStaggeredGrid(
-                    columns = StaggeredGridCells.Fixed(2),
-                    verticalItemSpacing = 8.dp,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    items(items = uiState.news) { news ->
-                        NewsCard2(
-                            news = news,
-                            onClick = {
-                                context.launchCustomTabs(
-                                    url = news.url,
-                                    useIncognito = false
-                                )
-                            }
-                        )
+                    loadState.refresh is LoadState.Error -> {
+                        val error = items.loadState.refresh as LoadState.Error
+
+                        item {
+                            ErrorMessage(
+                                title = "Error",
+                                subtitle = error.error.localizedMessage!!,
+                            )
+                        }
+                    }
+
+                    loadState.append is LoadState.Loading -> {
+                        item {
+                            CircularProgressIndicator()
+                        }
+                    }
+
+                    loadState.append is LoadState.Error -> {
+                        val error = items.loadState.refresh as LoadState.Error
+                        item {
+                            ErrorMessage(
+                                title = "Error",
+                                subtitle = error.error.localizedMessage!!,
+                            )
+                        }
                     }
                 }
-            }
-
-            UiStatus.ERROR -> {
-                ErrorMessage(
-                    title = "Error",
-                    subtitle = "${uiState.error?.localizedMessage}"
-                )
             }
         }
     }

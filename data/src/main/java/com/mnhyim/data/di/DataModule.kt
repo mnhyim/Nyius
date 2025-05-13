@@ -4,6 +4,7 @@ import android.util.Log
 import com.mnhyim.data.remote.NewsApi
 import com.mnhyim.data.remote.NewsApiImpl
 import com.mnhyim.data.remote.NewsRepositoryImpl
+import com.mnhyim.data.remote.paging.PagedNewsRepository
 import com.mnhyim.domain.network.NewsRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -42,4 +43,8 @@ val provideNewsApiModule = module {
 
 val provideRepositoryModule = module {
     single<NewsRepository> { NewsRepositoryImpl(get()) }
+}
+
+val providePagedDataRepository = module {
+    single<PagedNewsRepository> { NewsRepositoryImpl(get()) }
 }

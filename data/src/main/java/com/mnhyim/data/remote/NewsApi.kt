@@ -12,5 +12,6 @@ interface NewsApi {
         lang: Language = Language.EN,
         country: Country = Country.US
     ): SourcesApiResponse
-    suspend fun getTopHeadlinesBySources(sources: String): NewsApiResponse
+
+    suspend fun getTopHeadlinesBySources(sources: String, page: Int = 1): NewsApiResponse
 }
