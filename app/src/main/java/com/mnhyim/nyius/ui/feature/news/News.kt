@@ -41,7 +41,7 @@ fun NewsScreen(
             TitledTopAppBar(
                 title = uiState.source,
                 subtitle = "${uiState.category.title} news from ${uiState.source}",
-                icon = Icons.Default.Newspaper
+                icon = Icons.Default.Newspaper,
             )
         }
     ) { innerPadding ->

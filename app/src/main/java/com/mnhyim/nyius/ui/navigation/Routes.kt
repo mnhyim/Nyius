@@ -9,6 +9,9 @@ sealed class Routes {
     data object Home : Routes()
 
     @Serializable
+    data object Search : Routes()
+
+    @Serializable
     data class Sources(val category: String) : Routes()
 
     @Serializable

@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import com.mnhyim.data.remote.paging.NewsPagingSource
 import com.mnhyim.data.remote.paging.PagedNewsRepository
+import com.mnhyim.data.remote.paging.SearchNewsPagingSource
 import com.mnhyim.domain.model.News
 import com.mnhyim.domain.model.Resource
 import com.mnhyim.domain.model.Source
@@ -58,7 +59,7 @@ class NewsRepositoryImpl(
             val response = api.getTopHeadlinesBySources(sources = sources)
             val mappedResponse = response.articles.map {
                 News(
-                    source = Source(it.source.id, it.source.name),
+                    source = Source(it.source.id ?: "", it.source.name),
                     author = it.author ?: "",
                     title = it.title ?: "",
                     description = it.description ?: "",
@@ -81,7 +82,30 @@ class NewsRepositoryImpl(
         ).flow.map { pagingData ->
             pagingData.map {
                 News(
-                    source = Source(it.source.id, it.source.name),
+                    source = Source(it.source.id ?: "", it.source.name),
+                    author = it.author ?: "",
+                    title = it.title ?: "",
+                    description = it.description ?: "",
+                    url = it.url ?: "",
+                    urlToImage = it.urlToImage ?: "",
+                    timestamp = ZonedDateTime.parse(it.publishedAt).toLocalDate(),
+                    content = it.content ?: ""
+                )
+            }
+        }
+    }
+
+    override fun searchNews(
+        query: String,
+        page: Int
+    ): Flow<PagingData<News>> {
+        return Pager(
+            config = PagingConfig(pageSize = 5, initialLoadSize = 10),
+            pagingSourceFactory = { SearchNewsPagingSource(api, query) }
+        ).flow.map { pagingData ->
+            pagingData.map {
+                News(
+                    source = Source(it.source.id ?: "", it.source.name),
                     author = it.author ?: "",
                     title = it.title ?: "",
                     description = it.description ?: "",

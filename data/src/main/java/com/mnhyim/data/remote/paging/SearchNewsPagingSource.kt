@@ -6,16 +6,16 @@ import androidx.paging.PagingState
 import com.mnhyim.data.dto.NewsDto
 import com.mnhyim.data.remote.NewsApi
 
-class NewsPagingSource(
+class SearchNewsPagingSource(
     private val api: NewsApi,
-    private val sources: String
+    private val query: String
 ) : PagingSource<Int, NewsDto>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, NewsDto> {
         val page = params.key ?: 1
 
         return try {
-            val response = api.getTopHeadlinesBySources(sources, page)
+            val response = api.searchNews(query, page)
             val articles = response.articles
 
             LoadResult.Page(

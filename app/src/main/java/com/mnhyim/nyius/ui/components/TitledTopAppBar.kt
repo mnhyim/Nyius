@@ -2,6 +2,7 @@ package com.mnhyim.nyius.ui.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,6 +22,7 @@ fun TitledTopAppBar(
     title: String,
     subtitle: String,
     modifier: Modifier = Modifier,
+    actions: @Composable RowScope.() -> Unit = {},
     icon: ImageVector? = null,
 ) {
     TopAppBar(
@@ -40,12 +42,12 @@ fun TitledTopAppBar(
                 }
                 Column {
                     Text(
-                        text = "$title",
+                        text = title,
                         color = MaterialTheme.colorScheme.primary,
                         style = MaterialTheme.typography.titleMedium,
                     )
                     Text(
-                        text = "$subtitle",
+                        text = subtitle,
                         color = MaterialTheme.colorScheme.primary,
 
                         style = MaterialTheme.typography.labelSmall,
@@ -53,6 +55,7 @@ fun TitledTopAppBar(
                 }
             }
         },
+        actions = actions,
         modifier = modifier
     )
 }

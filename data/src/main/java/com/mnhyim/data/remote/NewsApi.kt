@@ -14,4 +14,6 @@ interface NewsApi {
     ): SourcesApiResponse
 
     suspend fun getTopHeadlinesBySources(sources: String, page: Int = 1): NewsApiResponse
+
+    suspend fun searchNews(q: String, page: Int = 1): NewsApiResponse
 }

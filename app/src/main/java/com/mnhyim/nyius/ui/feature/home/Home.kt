@@ -8,7 +8,10 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Category
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -31,7 +34,14 @@ fun HomeScreen(
             TitledTopAppBar(
                 title = "Categories",
                 subtitle = "Browse News by Categories",
-                icon = Icons.Default.Category
+                icon = Icons.Default.Category,
+                actions = {
+                    IconButton(
+                        onClick = { onNavigate(Routes.Search) }
+                    ) {
+                        Icon(Icons.Default.Search, "")
+                    }
+                }
             )
         }
     ) { innerPadding ->

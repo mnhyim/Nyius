@@ -14,7 +14,7 @@ class NewsApiImpl(
 ) : NewsApi {
 
     private val BASE_URL = "https://newsapi.org/v2/"
-    private val DUMMY_API_KEY = "b5b3fd01223347e6aaf0ca07db30fec2"
+    private val DUMMY_API_KEY = ""
 
     override suspend fun getNewsSources(
         category: Category,
@@ -30,6 +30,16 @@ class NewsApiImpl(
     override suspend fun getTopHeadlinesBySources(sources: String, page: Int): NewsApiResponse {
         val news: NewsApiResponse =
             httpClient.get(BASE_URL + "everything?sources=${sources}&page=$page&pageSize=5&apiKey=${DUMMY_API_KEY}")
+                .body()
+        return news
+    }
+
+    override suspend fun searchNews(
+        query: String,
+        page: Int
+    ): NewsApiResponse {
+        val news: NewsApiResponse =
+            httpClient.get(BASE_URL + "everything?q=${query}&page=$page&pageSize=5&apiKey=${DUMMY_API_KEY}")
                 .body()
         return news
     }
