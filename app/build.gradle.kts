@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -40,6 +41,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":domain"))
+    implementation(project(":data"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -56,4 +59,19 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.core)
+    implementation(libs.koin.androidx.compose)
+    implementation(libs.koin.androidx.compose.navigation)
+    implementation(libs.compose.navigation)
+
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.browser)
+    implementation(libs.google.fonts)
+    implementation(libs.material.icons.extended)
+    implementation(libs.coil3.compose)
+    implementation(libs.coil3.network)
+    implementation(libs.paging)
+    implementation(libs.paging.compose)
 }
