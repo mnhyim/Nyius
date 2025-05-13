@@ -8,5 +8,6 @@ data class NewsUiState(
     val status: UiStatus = UiStatus.LOADING,
     val source: String = "",
     val category: Category,
+    val error: Throwable? = null,
     val news: List<News> = emptyList(),
 )

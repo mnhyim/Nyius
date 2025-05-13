@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.mnhyim.nyius.ui.components.ErrorMessage
 import com.mnhyim.nyius.ui.components.NewsCard2
 import com.mnhyim.nyius.ui.components.TitledTopAppBar
 import com.mnhyim.nyius.ui.navigation.Routes
@@ -103,7 +104,10 @@ private fun News(
             }
 
             UiStatus.ERROR -> {
-                Text("Error")
+                ErrorMessage(
+                    title = "Error",
+                    subtitle = "${uiState.error?.localizedMessage}"
+                )
             }
         }
     }

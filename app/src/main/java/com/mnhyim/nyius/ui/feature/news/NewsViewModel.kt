@@ -46,7 +46,7 @@ class NewsViewModel(
 
                 is Resource.Error -> {
                     _uiState.update {
-                        it.copy(status = UiStatus.ERROR)
+                        it.copy(status = UiStatus.ERROR, error = response.exception)
                     }
                 }
 
