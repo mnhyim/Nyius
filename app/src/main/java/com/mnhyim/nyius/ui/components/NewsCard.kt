@@ -33,6 +33,7 @@ import coil3.compose.SubcomposeAsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.mnhyim.domain.model.News
+import com.mnhyim.nyius.ui.util.getRelativeTime
 
 @Composable
 fun NewsCard(
@@ -145,9 +146,13 @@ fun NewsCard2(
             modifier = Modifier.padding(16.dp, 8.dp, 16.dp, 16.dp)
         ) {
             Text(
+                text = getRelativeTime(news.timestamp),
+                style = MaterialTheme.typography.labelSmall,
+            )
+            Text(
                 text = news.title,
                 style = MaterialTheme.typography.titleSmall,
-                modifier = Modifier.padding(vertical = 4.dp)
+                modifier = Modifier.padding(vertical = 8.dp)
             )
             Text(
                 text = news.description,

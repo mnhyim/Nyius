@@ -7,13 +7,10 @@ import com.mnhyim.domain.model.enums.Country
 import com.mnhyim.domain.model.enums.Language
 
 interface NewsApi {
-    //    suspend fun searchNews(query: String, lang: Language): List<News>
     suspend fun getNewsSources(
-        category: Category? = null,
-        lang: Language? = null,
-        country: Country? = null
+        category: Category,
+        lang: Language = Language.EN,
+        country: Country = Country.US
     ): SourcesApiResponse
-//    suspend fun getTopHeadlinesByCountry(country: Country)
-//    suspend fun getTopHeadlinesByCategory(category: Category)
     suspend fun getTopHeadlinesBySources(sources: String): NewsApiResponse
 }

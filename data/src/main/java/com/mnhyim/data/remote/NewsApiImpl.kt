@@ -11,22 +11,26 @@ import io.ktor.client.request.get
 
 class NewsApiImpl(
     private val httpClient: HttpClient
-): NewsApi {
+) : NewsApi {
 
     private val BASE_URL = "https://newsapi.org/v2/"
-    private val DUMMY_API_KEY = ""
+    private val DUMMY_API_KEY = "b5b3fd01223347e6aaf0ca07db30fec2"
 
     override suspend fun getNewsSources(
-        category: Category?,
-        lang: Language?,
-        country: Country?
+        category: Category,
+        lang: Language,
+        country: Country
     ): SourcesApiResponse {
-        val sources: SourcesApiResponse = httpClient.get(BASE_URL + "top-headlines/sources?category=${category?.title}&apiKey=${DUMMY_API_KEY}").body()
+        val sources: SourcesApiResponse =
+            httpClient.get(BASE_URL + "top-headlines/sources?category=${category.name}&language=${lang.name}&country=${country.name}&apiKey=${DUMMY_API_KEY}")
+                .body()
         return sources
     }
 
     override suspend fun getTopHeadlinesBySources(sources: String): NewsApiResponse {
-        val news: NewsApiResponse = httpClient.get(BASE_URL + "top-headlines?sources=${sources}&apiKey=${DUMMY_API_KEY}").body()
+        val news: NewsApiResponse =
+            httpClient.get(BASE_URL + "top-headlines?sources=${sources}&apiKey=${DUMMY_API_KEY}")
+                .body()
         return news
     }
 }

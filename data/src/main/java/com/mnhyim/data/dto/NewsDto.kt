@@ -10,6 +10,6 @@ data class NewsDto(
     val description: String? = "",
     val url: String? = "",
     val urlToImage: String? = "",
-    val timestamp: String? = "",
+    val publishedAt: String? = "",
     val content: String? = "",
 )

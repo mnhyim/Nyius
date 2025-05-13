@@ -11,9 +11,9 @@ import kotlinx.coroutines.flow.Flow
 interface NewsRepository {
     //    suspend fun searchNews(query: String, lang: Language): Flow<Resource<List<News>>>
     fun getNewsSources(
-        category: Category? = null,
-        lang: Language? = null,
-        country: Country? = null
+        category: Category,
+        lang: Language = Language.EN,
+        country: Country = Country.US
     ): Flow<Resource<List<SourceDetail>>>
 //    suspend fun getTopHeadlinesByCountry(country: Country)
 //    suspend fun getTopHeadlinesByCategory(category: Category)

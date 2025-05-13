@@ -12,16 +12,19 @@ import com.mnhyim.domain.model.Source
 import com.mnhyim.domain.network.NewsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import java.time.Instant
 import java.time.LocalDate
+import java.time.ZoneId
+import java.time.ZonedDateTime
 
 class NewsRepositoryImpl(
     private val api: NewsApi
 ) : NewsRepository {
 
     override fun getNewsSources(
-        category: Category?,
-        lang: Language?,
-        country: Country?
+        category: Category,
+        lang: Language,
+        country: Country
     ): Flow<Resource<List<SourceDetail>>> = flow {
         emit(Resource.Loading)
         try {
@@ -36,9 +39,9 @@ class NewsRepositoryImpl(
                     name = it.name,
                     desc = it.description,
                     url = it.url,
-                    category = Category.ENTERTAINMENT,
-                    language = Language.EN,
-                    country = Country.US
+                    category = Category.valueOf(it.category.uppercase()),
+                    language = Language.valueOf(it.language.uppercase()),
+                    country = Country.valueOf(it.country.uppercase())
                 )
             }
             emit(Resource.Success(mappedResponse))
@@ -59,7 +62,7 @@ class NewsRepositoryImpl(
                     description = it.description ?: "",
                     url = it.url ?: "",
                     urlToImage = it.urlToImage ?: "",
-                    timestamp = LocalDate.now(),
+                    timestamp = ZonedDateTime.parse(it.publishedAt).toLocalDate(),
                     content = it.content ?: ""
                 )
             }
